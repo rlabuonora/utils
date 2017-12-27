@@ -21,10 +21,10 @@ def run_commands(commands):
     [os.system(pipes.quote(command)) for command in commands]
 
 
-def interpolate_command(command, old_file, new_file):
+def build_commands(command, old_files, new_files):
     # returns a str with the command to be run
-    ffmpeg_command = substitute_filenames(command, old_file, new_full)
-    return ffmpeg_command
+    commands = [ command.format(pipes.quote(old_file), pipes.quote(new_file)) for old_file, new_file in zip(old_files, new_files)]
+    return commands
 
 
 def rip_audio(source, destination):
