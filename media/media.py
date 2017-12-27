@@ -6,13 +6,14 @@ import glob
 
 def get_dest_files(new_extension, new_location, original_files):
     # retrun a list of new files based on the original files
-    # new_names = [ os.path.splitext(os.path.basename(video_file))[0] for video_file in original_files]
+    new_names = [ os.path.splitext(os.path.basename(video_file))[0] for video_file in original_files ]
+    new_files = [ os.path.join(new_location, "{}.{}".format(new_name, new_extension)) for new_name in new_names ]
     # return new_names
-    return True
+    return new_files
 
-def get_original_files(source_location):
+def get_original_files(source_location, extension):
     # returns a list of files to be ripped or converted
-    return glob.glob(os.path.join(source_location, '*.avi'))
+    return glob.glob(os.path.join(source_location, '*.{}'.format(extension)))
     
 
 def run_commands(commands):
