@@ -18,7 +18,7 @@ def get_original_files(source_location, extension):
 
 def run_commands(commands):
     # quotes and runs a list of commands
-    [os.system(pipes.quote(command)) for command in commands]
+    [os.system(command) for command in commands]
 
 
 def build_commands(command, old_files, new_files):
@@ -28,9 +28,23 @@ def build_commands(command, old_files, new_files):
 
 
 def rip_audio(source, destination):
-    pass
+    original_files = get_original_files(source, "avi")
+    new_files = get_dest_files("mp3", destination, original_files)
+    audio_command = "ffmpeg -i {0} -vn -sn -c:a mp3 -ab 192k {1}"
+    commands = build_commands(audio_command, original_files, new_files)
+    run_commands(commands)
 
 def compress_video(source, destination):
-    pass
+    original_files = get_original_files(source, "avi")
+    new_files = get_dest_files("mp4", destination, original_files)
+    audio_command = "ffmpeg -i {0} {1}"
+    commands = build_commands(audio_command, original_files, new_files)
+    run_commands(commands)
 
 
+if __name__ == '__main__':
+    source = sys.argv[1]
+    dest = sys.argv[2]
+    #rip_audio(source, dest)
+    compress_video(source, dest)
+    
